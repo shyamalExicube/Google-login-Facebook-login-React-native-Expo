@@ -20,27 +20,49 @@ export default class App extends React.Component {
   click(){
     alert("you have clicked");
   }
-  signInWithGoogleAsync = async () => {
+  // signInWithGoogleAsync = async () => {
 
-    try {
-      const result = await Expo.Google.logInAsync({
-        androidClientId: '358320895461-tv0q4ofgddvs75fkn6n36ii8v2a0887d.apps.googleusercontent.com',
-        scopes: ['profile','email'],
-      })
+  //   try {
+  //     const result = await Expo.Google.logInAsync({
+  //       androidClientId: '358320895461-tv0q4ofgddvs75fkn6n36ii8v2a0887d.apps.googleusercontent.com',
+  //       scopes: ['profile','email'],
+  //     })
 
-      if (result.type === 'success') {
-        return result
+  //     if (result.type === 'success') {
+  //       return result
+  //     }
+  //     return { cancelled: true }
+  //   } catch (e) {
+  //     return { error: e }
+  //   }
+  //   console.log(result);
+  // }
+  // onLoginPress = async () => {
+  //   const result = await this.signInWithGoogleAsync()
+  //   console.log(result);
+ 
+      async facebookSignin() {
+      const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('157294281606521', {
+          permissions: ['public_profile'],
+        });
+      if (type === 'success') {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(
+          `https://graph.facebook.com/me?access_token=${token}`);
+          console.log("hi");
+          console.log(token);
+          console.log("hi");
+          console.log("hello");
+          console.log(response);
+          console.log("hello");
+        // Alert.alert(
+        //   'Logged in!',
+        //   `Hi ${(await response.json())}!`,
+        // );
       }
-      return { cancelled: true }
-    } catch (e) {
-      return { error: e }
     }
-    console.log(result);
-  }
-  onLoginPress = async () => {
-    const result = await this.signInWithGoogleAsync()
-    console.log(result);
-  }
+
+  
   render() {
     return (
    
@@ -63,11 +85,16 @@ export default class App extends React.Component {
                 
       //           />
       //  </View>
-      <TouchableOpacity onPress={this.onLoginPress} style={{top:40,alignSelf:'center',borderWidth:3,borderRadius:5,borderColor:'#D94628',height:50,width:150,flexDirection:'row',alignItems:'center',justifyContent:'center',backgroundColor:'#D94628'}}>
-              <View>
-                    <Text style={{color:'#fff',fontSize:30}} >g+</Text>
-              </View>
-      </TouchableOpacity>
+      // <TouchableOpacity onPress={this.onLoginPress} style={{top:40,alignSelf:'center',borderWidth:3,borderRadius:5,borderColor:'#D94628',height:50,width:150,flexDirection:'row',alignItems:'center',justifyContent:'center',backgroundColor:'#D94628'}}>
+      //         <View>
+      //               <Text style={{color:'#fff',fontSize:30}} >g+</Text>
+      //         </View>
+      // </TouchableOpacity>
+        <TouchableOpacity onPress={this.facebookSignin} style={{top:40,alignSelf:'center',borderWidth:3,borderRadius:5,borderColor:'#2B60BD',height:50,width:150,flexDirection:'row',alignItems:'center',justifyContent:'center',backgroundColor:'#2B60BD'}}>
+        <View>
+              <Text style={{color:'#fff',fontSize:50}} >f</Text>
+        </View>
+</TouchableOpacity>
       
 
 
